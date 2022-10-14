@@ -102,24 +102,28 @@
             android:id="@+id/option_twenty_percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
             android:text="@string/amazing_20" />
 
         <RadioButton
             android:id="@+id/option_eighteen_percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
             android:text="@string/good_18" />
 
         <RadioButton
             android:id="@+id/option_fifteen_percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
             android:text="@string/okay_15" />
 
         <RadioButton
             android:id="@+id/option_zero_percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
             android:text="@string/bad_0" />
 
     </RadioGroup>
@@ -130,7 +134,7 @@
         android:id="@+id/round_up_switch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:checked="true"
+        android:checked="false"
         android:text="@string/round_up_tip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tip_options"
@@ -157,16 +161,17 @@
         app:layout_constraintStart_toStartOf="@id/round_up_switch"
         app:layout_constraintTop_toBottomOf="@id/round_up_switch" />
 
-    <TextView
-        android:id="@+id/total_bill"
-        style="@style/Widget.TipTime.TotalBill"
-        android:layout_marginTop="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/calculate_button"
-        tools:text="Total bill: $200" />
+        <TextView
+            android:id="@+id/total_bill"
+            style="@style/Widget.TipTime.TotalBill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text=""
+            app:layout_constraintTop_toBottomOf="@id/calculate_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Total bill: $200" />
+
 
     <TextView
         android:id="@+id/total_for_person"
@@ -183,7 +188,7 @@
     <TextView
         android:id="@+id/tip_for_person"
         style="@style/Widget.TipTime.BillSubtitle"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
@@ -194,7 +199,7 @@
     <TextView
         android:id="@+id/service_price_per_person"
         style="@style/Widget.TipTime.BillSubtitle"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""

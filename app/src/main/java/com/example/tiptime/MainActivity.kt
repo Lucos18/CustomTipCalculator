@@ -1,6 +1,9 @@
 package com.example.tiptime
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tiptime.databinding.ActivityMainBinding
@@ -16,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         binding.calculateButton.setOnClickListener { calculateTip() }
 
     }
-
 
     private fun calculateTip() {
 
@@ -83,5 +85,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun roundUpDouble(value: Double): Double {
         return kotlin.math.ceil(value)
+    }
+    fun onRadioButtonClicked(view: View) {
+        if (returnTipPercentage(binding.tipOptions.checkedRadioButtonId) == 0.00)
+        {
+            binding.roundUpSwitch.isClickable = false
+            binding.roundUpSwitch.isChecked = false
+        } else binding.roundUpSwitch.isClickable = true
     }
 }
