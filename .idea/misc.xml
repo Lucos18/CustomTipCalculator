@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Lucos18/AndroidStudioProjects/CustomTipTime/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1425" />
+        <entry key="..\:/Users/Lucos18/AndroidStudioProjects/CustomTipTime/app/src/main/res/drawable/ic_baseline_room_service_24.xml" value="0.1425" />
+        <entry key="..\:/Users/Lucos18/AndroidStudioProjects/CustomTipTime/app/src/main/res/layout/activity_main.xml" value="0.15138549307253463" />
+        <entry key="..\:/Users/Nicola/AndroidStudioProjects/XML/TipTime/app/src/main/res/drawable/ic_baseline_call_made_24.xml" value="0.1975" />
+        <entry key="..\:/Users/Nicola/AndroidStudioProjects/XML/TipTime/app/src/main/res/drawable/ic_baseline_room_service_24.xml" value="0.1975" />
+        <entry key="..\:/Users/Nicola/AndroidStudioProjects/XML/TipTime/app/src/main/res/drawable/ic_baseline_store_24.xml" value="0.1975" />
+        <entry key="..\:/Users/Nicola/AndroidStudioProjects/XML/TipTime/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/Nicola/AndroidStudioProjects/XML/TipTime/app/src/main/res/layout/fragment_liter.xml" value="0.38697916666666665" />
+        <entry key="..\:/Users/Nicola/AndroidStudioProjects/XML/TipTime/app/src/main/res/layout/fragment_tip_time.xml" value="0.38697916666666665" />
+        <entry key="..\:/Users/Nicola/AndroidStudioProjects/XML/TipTime/app/src/main/res/layout/nav_menu.xml" value="0.18768996960486323" />
+        <entry key="..\:/Users/Nicola/AndroidStudioProjects/XML/TipTime/app/src/main/res/menu/fragment_liter.xml" value="0.38697916666666665" />
+        <entry key="..\:/Users/Nicola/AndroidStudioProjects/XML/TipTime/app/src/main/res/menu/nav_menu.xml" value="0.38697916666666665" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+  <component name="SuppressABINotification">
+    <option name="modulesWithSuppressedNotConfigured">
+      <set>
+        <option value="Tip_Time.app" />
+      </set>
+    </option>
+  </component>
+</project>

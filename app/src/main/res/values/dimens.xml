@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="min_text_height">48dp</dimen>
+    <dimen name="min_text_height_bill">36dp</dimen>
+    <dimen name="min_text_height_subBill">24dp</dimen>
+</resources>
