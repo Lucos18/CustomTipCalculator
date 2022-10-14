@@ -116,6 +116,12 @@
             android:layout_height="wrap_content"
             android:text="@string/okay_15" />
 
+        <RadioButton
+            android:id="@+id/option_zero_percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bad_0" />
+
     </RadioGroup>
 
 
