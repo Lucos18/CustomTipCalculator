@@ -1,15 +1,10 @@
 package com.example.tiptime
 
-import android.content.Context
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tiptime.databinding.ActivityMainBinding
 import java.text.NumberFormat
-import kotlin.math.round
 
 lateinit var binding: ActivityMainBinding
 
@@ -43,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                     if (binding.roundUpSwitch.isChecked) roundUpDouble(tipPercentage * cost) else tipPercentage * cost
 
                 val tipForPerson =
-                     if (binding.roundUpSwitch.isChecked) roundUpDouble(tiptotal / numberOfPeople) else tiptotal / numberOfPeople
+                    if (binding.roundUpSwitch.isChecked) roundUpDouble(tiptotal / numberOfPeople) else tiptotal / numberOfPeople
 
                 val totalBillToPayPerPerson = (cost / numberOfPeople) + tipForPerson
                 val totalBillToPay = totalBillToPayPerPerson * numberOfPeople
@@ -67,17 +62,6 @@ class MainActivity : AppCompatActivity() {
             } else showToastErrorMessage(R.string.error_empty_number_of_people)
         } else showToastErrorMessage(R.string.error_empty_cost_of_service)
 
-    }
-
-    private fun handleKeyEvent(view: View, keyCode: Int): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_ENTER) {
-            // Hide the keyboard
-            val inputMethodManager =
-                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
-            return true
-        }
-        return false
     }
 
     private fun returnTipPercentage(checkedRadioButton: Int): Double {
