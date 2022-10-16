@@ -2,8 +2,11 @@
     <string name="app_name">Tip Time</string>
     <string name="cost_of_service">Cost of Service</string>
     <string name="how_was_the_service">How was the service?</string>
+    <string name="settings_currency">Select current currency</string>
     <string name="cost_of_service_edit_text">Cost of Service</string>
     <string name="amazing_20">Amazing (20%)</string>
+    <string name="dollars_currency">$ (dollars)</string>
+    <string name="euro_currency">€ (euro)</string>
     <string name="good_18">Good (18%)</string>
     <string name="okay_15">Okay (15%)</string>
     <string name="bad_0">Bad (0%)</string>
