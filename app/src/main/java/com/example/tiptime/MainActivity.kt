@@ -15,7 +15,7 @@ import java.util.*
 lateinit var binding: ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private val TAG = "MainActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onCreateOptionsMenu(menu: Menu) : Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_homepage, menu);
-        return true;
+        menuInflater.inflate(R.menu.menu_homepage, menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -37,10 +37,7 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun navigateToSettingsActivity() {
-        val intent = Intent(this@MainActivity, SettingsScreenActivity::class.java)
-        startActivity(intent)
-    }
+
 
     private fun calculateTip() {
 
@@ -104,6 +101,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * It will accept a currency as a string and it will return it to Locale location
+     */
     private fun transformCurrencySymbolToLocale(currency: String): Locale {
         return when (currency) {
             "$" -> Locale.CANADA
@@ -112,6 +112,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Accepts a checkedRadioButton and it will return a double to calculate the percentage of the
+     * tip
+     */
     private fun returnTipPercentage(checkedRadioButton: Int): Double {
         return when (checkedRadioButton) {
             R.id.option_twenty_percent -> 0.20
@@ -135,22 +139,44 @@ class MainActivity : AppCompatActivity() {
         return doubleValueConverted
     }
 
+    /**
+     *  Show a Toast message on the bottom of the device
+     */
     private fun showToastErrorMessage(errorMessageId: Int) {
         Toast.makeText(applicationContext, getString(errorMessageId), Toast.LENGTH_SHORT).show()
     }
 
+    /**
+     * Will format any Double passed as parameter to a Currency that you want to be converted
+     * and it accepts Locale as Location currency
+     */
     private fun formatDoubleToCurrency(doubleValue: Double, Locale: Locale): String {
         return NumberFormat.getCurrencyInstance(Locale).format(doubleValue)
     }
 
+    /**
+     * Will round up every Double passed as parameter to the highest number possible
+     */
     private fun roundUpDouble(value: Double): Double {
         return kotlin.math.ceil(value)
     }
 
+    /**
+     * Used as a click listener that will change the round up switch to disabled if the tip selected
+     * is 0%, else it will enabled to be clicked
+     */
     fun onRadioButtonClicked(view: View) {
         if (returnTipPercentage(binding.tipOptions.checkedRadioButtonId) == 0.00) {
             binding.roundUpSwitch.isClickable = false
             binding.roundUpSwitch.isChecked = false
         } else binding.roundUpSwitch.isClickable = true
+    }
+
+    /**
+     * It will navigate to the settings activity
+     */
+    private fun navigateToSettingsActivity() {
+        val intent = Intent(this@MainActivity, SettingsScreenActivity::class.java)
+        startActivity(intent)
     }
 }

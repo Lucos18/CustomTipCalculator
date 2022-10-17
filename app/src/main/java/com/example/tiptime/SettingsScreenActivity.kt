@@ -21,12 +21,13 @@ class SettingsScreenActivity : AppCompatActivity() {
         setContentView(bindingActivity.root)
         val toolbar = findViewById<Toolbar>(R.id.toolbar_Settings)
         toolbar.title = "Settings Page"
+        toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
         setSupportActionBar(toolbar)
-
+        toolbar.setNavigationOnClickListener{navigateToMainActivity()}
     }
     override fun onCreateOptionsMenu(menu: Menu) : Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_settings_page, menu);
+        //menuInflater.inflate(R.menu.menu_settings_page, menu);
         return true;
     }
 
