@@ -14,6 +14,12 @@ import java.util.*
 
 lateinit var binding: ActivityMainBinding
 
+/*
+Revision of the code:
+-Storage of service cost values and number of people when changing pages;
+-Correction calculations for tip, sum and price of service per person and specified strings with its values
+* */
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,22 +27,30 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val toolbar = findViewById<Toolbar>(R.id.toolbar_Homepage)
-
+        //
+        if (intent.getDoubleExtra("cost", 0.0) != 0.0) {
+            binding.costOfService.editText?.setText(
+                intent.getDoubleExtra("cost", 0.0).toString()
+            )
+            binding.numberOfPeople.editText?.setText(
+                intent.getIntExtra("people", 0).toString()
+            )
+        }
         setSupportActionBar(toolbar)
         binding.calculateButton.setOnClickListener { calculateTip() }
 
     }
-    override fun onCreateOptionsMenu(menu: Menu) : Boolean {
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_homepage, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.SettingsButton) navigateToSettingsActivity()
+        if (item.itemId == R.id.SettingsButton) navigateToSettingsActivity()
         return super.onOptionsItemSelected(item)
     }
-
 
 
     private fun calculateTip() {
@@ -70,18 +84,15 @@ class MainActivity : AppCompatActivity() {
                 //TODO Change method to a cleaner one
                 if (currency != null) {
                     currencyToFormat = transformCurrencySymbolToLocale(currency)
-                    totalBillToPayPerPerson =
-                        changeCurrencyToSelected(totalBillToPayPerPerson, currency)
                     totalBillToPay = changeCurrencyToSelected(totalBillToPay, currency)
-                    tipForPerson = changeCurrencyToSelected(tipForPerson, currency)
+                    totalBillToPayPerPerson = totalBillToPay / numberOfPeople
+                    tipForPerson = totalBillToPayPerPerson - servicePerPerson
 
-
-                    if (binding.roundUpSwitch.isChecked)
-                    {
-                        tipForPerson = roundUpDouble(tipForPerson)
+                    if (binding.roundUpSwitch.isChecked) {
                         totalBillToPayPerPerson =
                             roundUpDouble(totalBillToPayPerPerson)
-                        totalBillToPay = roundUpDouble(totalBillToPay)
+                        tipForPerson = totalBillToPayPerPerson - servicePerPerson
+                        totalBillToPay = totalBillToPayPerPerson * numberOfPeople
                     }
                 }
                 //Format total values of the bills in current currency
@@ -138,7 +149,7 @@ class MainActivity : AppCompatActivity() {
                 doubleValueConverted *= 1.03
             }
             "€" -> if (currencySettings == "$") {
-                doubleValueConverted /= 1.03
+                doubleValueConverted /= 0.98
             }
         }
         return doubleValueConverted
@@ -182,6 +193,8 @@ class MainActivity : AppCompatActivity() {
      */
     private fun navigateToSettingsActivity() {
         val intent = Intent(this@MainActivity, SettingsScreenActivity::class.java)
+        intent.putExtra("cost", binding.costOfServiceEditText.text.toString().toDoubleOrNull())
+        intent.putExtra("people", binding.numberOfPeopleEditText.text.toString().toIntOrNull())
         startActivity(intent)
     }
 }

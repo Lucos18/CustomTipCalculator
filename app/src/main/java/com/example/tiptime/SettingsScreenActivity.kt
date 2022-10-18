@@ -31,7 +31,6 @@ class SettingsScreenActivity : AppCompatActivity() {
         return true;
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.ArrowBackButton) navigateToMainActivity()
         return super.onOptionsItemSelected(item)
@@ -40,6 +39,8 @@ class SettingsScreenActivity : AppCompatActivity() {
     private fun navigateToMainActivity() {
         val intent = Intent(this@SettingsScreenActivity, MainActivity::class.java)
         intent.putExtra("selectedCurrency", selectedCurrency)
+        intent.putExtra("cost", binding.costOfServiceEditText.text.toString().toDoubleOrNull())
+        intent.putExtra("people", binding.numberOfPeopleEditText.text.toString().toIntOrNull())
         startActivity(intent)
     }
 
