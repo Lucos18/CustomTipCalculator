@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity() {
                 var tiptotal = tipPercentage * cost
                 var tipForPerson = tiptotal / numberOfPeople
                 if (binding.roundUpSwitch.isChecked) {
-                    tiptotal = roundUpDouble(tiptotal)
                     tipForPerson = roundUpDouble(tipForPerson)
                 }
                 var totalBillToPayPerPerson = (cost / numberOfPeople) + tipForPerson
@@ -68,17 +67,23 @@ class MainActivity : AppCompatActivity() {
                 var servicePerPerson = cost / numberOfPeople
 
                 //If currency in the settings is different from null, then convert every value to the selected currency
+                //TODO Change method to a cleaner one
                 if (currency != null) {
                     currencyToFormat = transformCurrencySymbolToLocale(currency)
-                    tiptotal = changeCurrencyToSelected(tiptotal, currency)
-                    tipForPerson = changeCurrencyToSelected(tipForPerson, currency)
                     totalBillToPayPerPerson =
                         changeCurrencyToSelected(totalBillToPayPerPerson, currency)
                     totalBillToPay = changeCurrencyToSelected(totalBillToPay, currency)
-                    servicePerPerson = changeCurrencyToSelected(servicePerPerson, currency)
+                    tipForPerson = changeCurrencyToSelected(tipForPerson, currency)
+
+
+                    if (binding.roundUpSwitch.isChecked)
+                    {
+                        tipForPerson = roundUpDouble(tipForPerson)
+                        totalBillToPayPerPerson =
+                            roundUpDouble(totalBillToPayPerPerson)
+                        totalBillToPay = roundUpDouble(totalBillToPay)
+                    }
                 }
-
-
                 //Format total values of the bills in current currency
                 val formattedTotalBillPerPerson =
                     formatDoubleToCurrency(totalBillToPayPerPerson, currencyToFormat)
@@ -106,7 +111,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun transformCurrencySymbolToLocale(currency: String): Locale {
         return when (currency) {
-            "$" -> Locale.CANADA
+            "$" -> Locale.US
             "€" -> Locale.ITALY
             else -> Locale.getDefault()
         }
