@@ -18,6 +18,7 @@ lateinit var binding: ActivityMainBinding
 Revision of the code:
 -Storage of service cost values and number of people when changing pages;
 -Correction calculations for tip, sum and price of service per person and specified strings with its values
+-Adding a switch: if it is false the number of people cannot be entered and by default it is set to 1 person, if it is true the number of people can be modified
 * */
 
 class MainActivity : AppCompatActivity() {
@@ -60,6 +61,7 @@ class MainActivity : AppCompatActivity() {
 
         //Get the user input text inside the EditableText, if empty returns null
         var cost = binding.costOfServiceEditText.text.toString().toDoubleOrNull()
+        //Acquisition of the person number
         var numberOfPeople = checkedPeople()
         //Check that the cost isn't null
         if (cost != null) {
