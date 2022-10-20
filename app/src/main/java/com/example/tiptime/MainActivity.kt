@@ -37,6 +37,9 @@ class MainActivity : AppCompatActivity() {
             )
         }
         setSupportActionBar(toolbar)
+        binding.numberOfPeople.isEnabled = false
+        binding.numberOfPeopleEditText.text = null
+        binding.roundUpSwitchPeople.setOnClickListener { checkedPeople() }
         binding.calculateButton.setOnClickListener { calculateTip() }
 
     }
@@ -57,8 +60,7 @@ class MainActivity : AppCompatActivity() {
 
         //Get the user input text inside the EditableText, if empty returns null
         var cost = binding.costOfServiceEditText.text.toString().toDoubleOrNull()
-        val numberOfPeople = binding.numberOfPeopleEditText.text.toString().toIntOrNull()
-
+        var numberOfPeople = checkedPeople()
         //Check that the cost isn't null
         if (cost != null) {
 
@@ -115,6 +117,21 @@ class MainActivity : AppCompatActivity() {
             } else showToastErrorMessage(R.string.error_empty_number_of_people)
         } else showToastErrorMessage(R.string.error_empty_cost_of_service)
 
+    }
+
+    /**
+     * Depending on the switch, if it is false you cannot enter the number of people, if it is true you can enter
+     */
+    private fun checkedPeople(): Int? {
+        var numberOfPeople = binding.numberOfPeopleEditText.text.toString().toIntOrNull()
+        if (binding.roundUpSwitchPeople.isChecked) {
+            binding.numberOfPeople.isEnabled = true
+        } else {
+            binding.numberOfPeople.isEnabled = false
+            binding.numberOfPeopleEditText.text = null
+            numberOfPeople = 1
+        }
+        return numberOfPeople
     }
 
     /**
