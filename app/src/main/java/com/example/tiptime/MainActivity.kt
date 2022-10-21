@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -22,7 +23,7 @@ Revision of the code:
 * */
 
 class MainActivity : AppCompatActivity() {
-
+    var currencyOfPhoneLocation: Locale = Locale.getDefault()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         binding.numberOfPeopleEditText.text = null
         binding.roundUpSwitchPeople.setOnClickListener { checkedPeople() }
         binding.calculateButton.setOnClickListener { calculateTip() }
+        binding.convertToOtherCurrencies.setOnClickListener{ showCurrencyExchange() }
 
     }
 
@@ -68,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
             //Check that the cost isn't null and the number of people isn't 0
             if (numberOfPeople != null && numberOfPeople != 0) {
-                var currencyToFormat = Locale.getDefault()
+
                 var currency = intent.getStringExtra("selectedCurrency")
 
                 //Get the current checked Radio Button to calculate the tips on selected percentage
@@ -87,7 +89,7 @@ class MainActivity : AppCompatActivity() {
                 //If currency in the settings is different from null, then convert every value to the selected currency
                 //TODO Change method to a cleaner one
                 if (currency != null) {
-                    currencyToFormat = transformCurrencySymbolToLocale(currency)
+                    currencyOfPhoneLocation = transformCurrencySymbolToLocale(currency)
                     totalBillToPay = changeCurrencyToSelected(totalBillToPay, currency)
                     totalBillToPayPerPerson = totalBillToPay / numberOfPeople
                     tipForPerson = totalBillToPayPerPerson - servicePerPerson
@@ -101,11 +103,11 @@ class MainActivity : AppCompatActivity() {
                 }
                 //Format total values of the bills in current currency
                 val formattedTotalBillPerPerson =
-                    formatDoubleToCurrency(totalBillToPayPerPerson, currencyToFormat)
-                val totalBill = formatDoubleToCurrency(totalBillToPay, currencyToFormat)
-                val formattedTipForPerson = formatDoubleToCurrency(tipForPerson, currencyToFormat)
+                    formatDoubleToCurrency(totalBillToPayPerPerson, currencyOfPhoneLocation)
+                val totalBill = formatDoubleToCurrency(totalBillToPay, currencyOfPhoneLocation)
+                val formattedTipForPerson = formatDoubleToCurrency(tipForPerson, currencyOfPhoneLocation)
                 val formattedServicePerPerson =
-                    formatDoubleToCurrency(servicePerPerson, currencyToFormat)
+                    formatDoubleToCurrency(servicePerPerson, currencyOfPhoneLocation)
 
                 //Place in the TextView the calculated prices in formatted currency string
                 binding.totalBill.text = getString(R.string.total_bill, totalBill)
@@ -215,5 +217,14 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("cost", binding.costOfServiceEditText.text.toString().toDoubleOrNull())
         intent.putExtra("people", binding.numberOfPeopleEditText.text.toString().toIntOrNull())
         startActivity(intent)
+    }
+
+    private fun showCurrencyExchange(){
+        if (binding.currentCurrency.visibility == View.VISIBLE)
+        {
+            binding.currentCurrency.visibility = View.GONE
+        }else{
+            binding.currentCurrency.visibility = View.VISIBLE
+        }
     }
 }
