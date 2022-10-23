@@ -2,16 +2,19 @@ package com.example.tiptime
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils.indexOf
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.View.VISIBLE
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.example.tiptime.data.local.CurrencyData
 import com.example.tiptime.databinding.ActivityMainBinding
 import java.text.NumberFormat
 import java.util.*
+
 
 lateinit var binding: ActivityMainBinding
 
@@ -21,7 +24,8 @@ Revision of the code:
 -Correction calculations for tip, sum and price of service per person and specified strings with its values
 -Adding a switch: if it is false the number of people cannot be entered and by default it is set to 1 person, if it is true the number of people can be modified
 * */
-
+var selectedCurrency = Currency.getInstance(Locale.getDefault())
+var selectedCurrencyExchange = selectedCurrency
 class MainActivity : AppCompatActivity() {
     var currencyOfPhoneLocation: Locale = Locale.getDefault()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,8 +47,29 @@ class MainActivity : AppCompatActivity() {
         binding.numberOfPeopleEditText.text = null
         binding.roundUpSwitchPeople.setOnClickListener { checkedPeople() }
         binding.calculateButton.setOnClickListener { calculateTip() }
-        binding.convertToOtherCurrencies.setOnClickListener{ showCurrencyExchange() }
+        binding.convertToOtherCurrencies.setOnClickListener { showCurrencyExchange() }
+        binding.currentCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                val text: String = binding.currentCurrency.selectedItem.toString()
+                binding.imageCurrentCurrency.setImageResource(CurrencyData.valueOf(text).Flag)
+                selectedCurrency = Currency.getInstance(CurrencyData.valueOf(text).Code)
+            }
 
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+        binding.exchangeCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                val text2: String = binding.exchangeCurrency.selectedItem.toString()
+                binding.imageExchangeCurrency.setImageResource(CurrencyData.valueOf(text2).Flag)
+                selectedCurrencyExchange = Currency.getInstance(CurrencyData.valueOf(text2).Code)
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -105,7 +130,8 @@ class MainActivity : AppCompatActivity() {
                 val formattedTotalBillPerPerson =
                     formatDoubleToCurrency(totalBillToPayPerPerson, currencyOfPhoneLocation)
                 val totalBill = formatDoubleToCurrency(totalBillToPay, currencyOfPhoneLocation)
-                val formattedTipForPerson = formatDoubleToCurrency(tipForPerson, currencyOfPhoneLocation)
+                val formattedTipForPerson =
+                    formatDoubleToCurrency(tipForPerson, currencyOfPhoneLocation)
                 val formattedServicePerPerson =
                     formatDoubleToCurrency(servicePerPerson, currencyOfPhoneLocation)
 
@@ -219,12 +245,31 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun showCurrencyExchange(){
-        if (binding.currentCurrency.visibility == View.VISIBLE)
-        {
-            binding.currentCurrency.visibility = View.GONE
-        }else{
-            binding.currentCurrency.visibility = View.VISIBLE
+    private fun showCurrencyExchange() {
+        if (binding.changeCurrency.visibility == View.VISIBLE) {
+            binding.changeCurrency.visibility = View.GONE
+        } else {
+            binding.changeCurrency.visibility = View.VISIBLE
+
+            binding.currentCurrency.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, CurrencyData.values())
+            val text: String = binding.currentCurrency.selectedItem.toString()
+            binding.imageCurrentCurrency.setImageResource(CurrencyData.valueOf(text).Flag)
+            //selectSpinnerItemByValue(binding.currentCurrency, deviceCurrency.currencyCode)
+            binding.exchangeCurrency.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, CurrencyData.values())
+            val text2: String = binding.exchangeCurrency.selectedItem.toString()
+            binding.imageExchangeCurrency.setImageResource(CurrencyData.valueOf(text).Flag)
         }
     }
+    //TODO fix
+    /*
+    fun selectSpinnerItemByValue(spnr: Spinner, value: String) {
+        val adapter: SimpleCursorAdapter = spnr.adapter as SimpleCursorAdapter
+        for (position in 0 until adapter.count) {
+            if (adapter.getItem(position) == value) {
+                spnr.setSelection(position)
+            }
+        }
+    }
+
+     */
 }
