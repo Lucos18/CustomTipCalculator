@@ -12,10 +12,11 @@
     <string name="bad_0">Bad (0%)</string>
     <string name="calculate">Calculate</string>
     <string name="total_bill">Total bill: %s</string>
-    <string name="tip_for_person">Tip price: %s</string>
+    <string name="tip_for_person">Tip price for person: %s</string>
     <string name="total_for_person">Total for person: %s</string>
-    <string name="service_price_per_person">Service price: %s</string>
+    <string name="service_price_per_person">Service price for person (no tip): %s</string>
     <string name="round_up_tip">Round up tip?</string>
+    <string name="change_currency_question">Convert to another currency?</string>
     <string name="error_empty_cost_of_service">Cost of service cannot be empty.</string>
     <string name="error_empty_number_of_people">People number cannot be empty or 0.</string>
     <string name="number_of_people">Number of people</string>

@@ -49,7 +49,17 @@
                     android:textColorHint="#757575" />
 
             </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/currency_symbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                style="@style/Widget.TipTime.TextView"
+                app:layout_constraintStart_toEndOf="@id/cost_of_service"
+                app:layout_constraintTop_toBottomOf="@id/cost_of_service"
+                app:layout_constraintBottom_toTopOf="@id/cost_of_service">
 
+            </TextView>
             <ImageView
                 android:id="@+id/icon_number_people"
                 android:layout_width="wrap_content"
@@ -79,6 +89,18 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/round_up_switch_people"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/number_of_people"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/number_of_people"
+                app:layout_constraintTop_toBottomOf="@id/number_of_people"
+                app:layout_constraintTop_toTopOf="@id/number_of_people" />
+
             <ImageView
                 android:id="@+id/icon_service_question"
                 android:layout_width="wrap_content"
@@ -96,7 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/how_was_the_service"
                 app:layout_constraintStart_toEndOf="@id/icon_service_question"
                 app:layout_constraintTop_toBottomOf="@id/number_of_people" />
@@ -143,15 +165,98 @@
 
 
             <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/convert_to_other_currencies"
+                android:layout_width="0dp"
+                android:padding="8dp"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/change_currency_question"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/service_question"
+                app:layout_constraintTop_toBottomOf="@id/tip_options" />
+
+            <ImageView
+                android:id="@+id/currency_icon"
+                android:layout_width="wrap_content"
+                android:padding="16dp"
+                android:layout_height="wrap_content"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toBottomOf="@id/convert_to_other_currencies"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/convert_to_other_currencies"
+                app:srcCompat="@drawable/ic_baseline_repeat_24" />
+
+
+            <LinearLayout
+                android:id="@+id/change_currency"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingStart="8dp"
+                app:layout_constraintStart_toStartOf="@id/tip_options"
+                app:layout_constraintTop_toBottomOf="@id/convert_to_other_currencies"
+
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/image_current_currency"
+                    android:layout_width="wrap_content"
+                    android:maxHeight="128dp"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="@id/current_currency"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/current_currency"
+                    app:srcCompat="@drawable/it_flag" />
+                <Spinner
+                    android:id="@+id/current_currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/convert_to_other_currencies"
+                    app:layout_constraintStart_toEndOf="@id/image_current_currency">
+
+                </Spinner>
+                <ImageView
+                    android:id="@+id/icon_arrow_currency_converter"
+                    android:layout_width="wrap_content"
+                    android:maxHeight="128dp"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="@id/current_currency"
+                    app:layout_constraintStart_toEndOf="@id/current_currency"
+                    app:layout_constraintTop_toTopOf="@id/current_currency"
+                    app:srcCompat="@drawable/ic_baseline_arrow_forward_24" />
+                <Spinner
+                    android:id="@+id/exchange_currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+
+                    android:textAlignment="textEnd"
+                    app:layout_constraintTop_toBottomOf="@id/convert_to_other_currencies"
+                    app:layout_constraintStart_toEndOf="@id/icon_arrow_currency_converter">
+
+                </Spinner>
+                <ImageView
+                    android:id="@+id/image_exchange_currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="@id/current_currency"
+                    app:layout_constraintStart_toEndOf="@id/exchange_currency"
+                    app:layout_constraintTop_toTopOf="@id/current_currency"
+                    app:srcCompat="@drawable/us_flag" />
+            </LinearLayout>
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/round_up_switch"
                 android:layout_width="0dp"
-                android:padding="16dp"
+                android:padding="8dp"
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="@string/round_up_tip"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/service_question"
-                app:layout_constraintTop_toBottomOf="@id/tip_options" />
+                app:layout_constraintTop_toBottomOf="@id/change_currency" />
 
             <ImageView
                 android:id="@+id/icon_round_up"
