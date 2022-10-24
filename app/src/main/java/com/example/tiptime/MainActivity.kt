@@ -90,7 +90,6 @@ class MainActivity : AppCompatActivity() {
 
         //Get the user input text inside the EditableText, if empty returns null
         var cost = binding.costOfServiceEditText.text.toString().toDoubleOrNull()
-        Log.d("ciao", cost.toString())
         //Acquisition of the person number
         var numberOfPeople = checkedPeople()
         //Check that the cost isn't null
@@ -98,8 +97,6 @@ class MainActivity : AppCompatActivity() {
 
             //Check that the cost isn't null and the number of people isn't 0
             if (numberOfPeople != null && numberOfPeople != 0) {
-
-                var currency = intent.getStringExtra("selectedCurrency")
 
                 //Get the current checked Radio Button to calculate the tips on selected percentage
                 val tipPercentage = returnTipPercentage(binding.tipOptions.checkedRadioButtonId)
@@ -176,6 +173,7 @@ class MainActivity : AppCompatActivity() {
             "$" -> Locale.US
             "€" -> Locale.ITALY
             "£" -> Locale.UK
+            "¥" -> Locale.JAPAN
             else -> Locale.getDefault()
         }
     }
@@ -196,8 +194,6 @@ class MainActivity : AppCompatActivity() {
     private fun changeCurrencyToSelected(doubleValue: Double): Double {
         var currencySelectedValue = CurrencyData.valueOf(selectedCurrency.toString()).rate
         var currencyExchangeSelectedValue = CurrencyData.valueOf(selectedCurrencyExchange.toString()).rate
-        //Log.d("ciao", currencySelectedValue.toString())
-        //Log.d("ciao", currencyExchangeSelectedValue.toString())
         var rate = currencySelectedValue - currencyExchangeSelectedValue
         if (rate < 0.0 )
         {
@@ -206,21 +202,6 @@ class MainActivity : AppCompatActivity() {
             return doubleValue - tripleValue
         }
         return doubleValue + (rate * doubleValue)
-
-
-        /*
-        var doubleValueConverted = doubleValue
-        val currencyLocale: Currency = Currency.getInstance(Locale.getDefault())
-        when (currencyLocale.symbol) {
-            "$" -> if (currencySettings == "€") {
-                doubleValueConverted *= 1.03
-            }
-            "€" -> if (currencySettings == "$") {
-                doubleValueConverted /= 0.98
-            }
-        }
-        return doubleValueConverted
-         */
     }
 
     /**
