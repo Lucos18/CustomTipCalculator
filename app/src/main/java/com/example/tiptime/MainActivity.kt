@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
 import com.example.tiptime.data.local.CurrencyData
 import com.example.tiptime.databinding.ActivityMainBinding
 import java.text.NumberFormat
@@ -53,10 +54,11 @@ class MainActivity : AppCompatActivity() {
                 val text: String = binding.currentCurrency.selectedItem.toString()
                 binding.imageCurrentCurrency.setImageResource(CurrencyData.valueOf(text).Flag)
                 selectedCurrency = Currency.getInstance(CurrencyData.valueOf(text).Code)
+                binding.currencySymbol.text = CurrencyData.valueOf(text).Symbol.toString()
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
-                TODO("Not yet implemented")
+                return
             }
         }
         binding.exchangeCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -67,7 +69,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
-                TODO("Not yet implemented")
+                return
             }
         }
     }
@@ -88,6 +90,7 @@ class MainActivity : AppCompatActivity() {
 
         //Get the user input text inside the EditableText, if empty returns null
         var cost = binding.costOfServiceEditText.text.toString().toDoubleOrNull()
+        Log.d("ciao", cost.toString())
         //Acquisition of the person number
         var numberOfPeople = checkedPeople()
         //Check that the cost isn't null
@@ -113,9 +116,10 @@ class MainActivity : AppCompatActivity() {
 
                 //If currency in the settings is different from null, then convert every value to the selected currency
                 //TODO Change method to a cleaner one
-                if (currency != null) {
-                    currencyOfPhoneLocation = transformCurrencySymbolToLocale(currency)
-                    totalBillToPay = changeCurrencyToSelected(totalBillToPay, currency)
+                if (binding.changeCurrency.isVisible) {
+                    totalBillToPay = changeCurrencyToSelected(totalBillToPay)
+                    currencyOfPhoneLocation = transformCurrencySymbolToLocale(
+                        selectedCurrencyExchange.symbol)
                     totalBillToPayPerPerson = totalBillToPay / numberOfPeople
                     tipForPerson = totalBillToPayPerPerson - servicePerPerson
 
@@ -171,6 +175,7 @@ class MainActivity : AppCompatActivity() {
         return when (currency) {
             "$" -> Locale.US
             "€" -> Locale.ITALY
+            "£" -> Locale.UK
             else -> Locale.getDefault()
         }
     }
@@ -188,7 +193,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun changeCurrencyToSelected(doubleValue: Double, currencySettings: String): Double {
+    private fun changeCurrencyToSelected(doubleValue: Double): Double {
+        var currencySelectedValue = CurrencyData.valueOf(selectedCurrency.toString()).rate
+        var currencyExchangeSelectedValue = CurrencyData.valueOf(selectedCurrencyExchange.toString()).rate
+        //Log.d("ciao", currencySelectedValue.toString())
+        //Log.d("ciao", currencyExchangeSelectedValue.toString())
+        var rate = currencySelectedValue - currencyExchangeSelectedValue
+        if (rate < 0.0 )
+        {
+            rate = currencyExchangeSelectedValue - currencySelectedValue
+            val tripleValue = rate * doubleValue
+            return doubleValue - tripleValue
+        }
+        return doubleValue + (rate * doubleValue)
+
+
+        /*
         var doubleValueConverted = doubleValue
         val currencyLocale: Currency = Currency.getInstance(Locale.getDefault())
         when (currencyLocale.symbol) {
@@ -200,6 +220,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return doubleValueConverted
+         */
     }
 
     /**
@@ -248,28 +269,16 @@ class MainActivity : AppCompatActivity() {
     private fun showCurrencyExchange() {
         if (binding.changeCurrency.visibility == View.VISIBLE) {
             binding.changeCurrency.visibility = View.GONE
+            binding.currencySymbol.text = ""
         } else {
             binding.changeCurrency.visibility = View.VISIBLE
-
             binding.currentCurrency.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, CurrencyData.values())
             val text: String = binding.currentCurrency.selectedItem.toString()
             binding.imageCurrentCurrency.setImageResource(CurrencyData.valueOf(text).Flag)
-            //selectSpinnerItemByValue(binding.currentCurrency, deviceCurrency.currencyCode)
+            binding.currencySymbol.text = CurrencyData.valueOf(text).Symbol.toString()
             binding.exchangeCurrency.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, CurrencyData.values())
             val text2: String = binding.exchangeCurrency.selectedItem.toString()
             binding.imageExchangeCurrency.setImageResource(CurrencyData.valueOf(text).Flag)
         }
     }
-    //TODO fix
-    /*
-    fun selectSpinnerItemByValue(spnr: Spinner, value: String) {
-        val adapter: SimpleCursorAdapter = spnr.adapter as SimpleCursorAdapter
-        for (position in 0 until adapter.count) {
-            if (adapter.getItem(position) == value) {
-                spnr.setSelection(position)
-            }
-        }
-    }
-
-     */
 }

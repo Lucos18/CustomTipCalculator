@@ -49,7 +49,17 @@
                     android:textColorHint="#757575" />
 
             </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/currency_symbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                style="@style/Widget.TipTime.TextView"
+                app:layout_constraintStart_toEndOf="@id/cost_of_service"
+                app:layout_constraintTop_toBottomOf="@id/cost_of_service"
+                app:layout_constraintBottom_toTopOf="@id/cost_of_service">
 
+            </TextView>
             <ImageView
                 android:id="@+id/icon_number_people"
                 android:layout_width="wrap_content"
@@ -156,7 +166,7 @@
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/convert_to_other_currencies"
                 android:layout_width="0dp"
-                android:padding="16dp"
+                android:padding="8dp"
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="@string/change_currency_question"
@@ -173,17 +183,19 @@
                 app:layout_constraintBottom_toBottomOf="@id/convert_to_other_currencies"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/convert_to_other_currencies"
-                app:srcCompat="@drawable/ic_baseline_call_made_24" />
+                app:srcCompat="@drawable/ic_baseline_repeat_24" />
 
 
             <LinearLayout
                 android:id="@+id/change_currency"
                 android:visibility="gone"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:paddingStart="8dp"
                 app:layout_constraintStart_toStartOf="@id/tip_options"
                 app:layout_constraintTop_toBottomOf="@id/convert_to_other_currencies"
+
                 android:orientation="horizontal">
                 <ImageView
                     android:id="@+id/image_current_currency"
@@ -237,7 +249,7 @@
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/round_up_switch"
                 android:layout_width="0dp"
-                android:padding="16dp"
+                android:padding="8dp"
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="@string/round_up_tip"
